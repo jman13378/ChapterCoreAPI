@@ -3,13 +3,17 @@
 A JS API for the discord bot Sokobot
 
 ## References
-- [Example Usage](https://github.com/Sokobot-Hosted/Sokobot-JS/tree/main#Usage)
-- [Links](https://github.com/Sokobot-Hosted/Sokobot-JS/tree/main#e)
+- [Sokobot-JS](#sokobot-js)
+  - [References](#references)
+  - [Usage](#usage)
+    - [Prerequisites](#prerequisites)
+    - [Set Up](#set-up)
+  - [Links](#links)
+
 
 
 ## Usage
-- [Prerequisites]()
-- [Set Up]()
+
 ### Prerequisites
 To use the JS API you will need the following
 - `Node JS`
@@ -19,11 +23,12 @@ To use the JS API you will need the following
 ### Set Up
 
 ```js
-const Sokobot = require("sokobot");
-const sokobot = new Sokobot(
-  "{token}"
-);
+const Sokobot = require("sokobot"); // initialize your sokobot module
+const sokobot = new Sokobot("{token}"); // initialize the sokobot instance with your provided api key
 
+/**
+ * Basic function to get a users level
+ */
 async function getLevel() {
   let user = await sokobot.getUser("{UserId}");
 
