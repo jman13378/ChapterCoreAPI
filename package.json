@@ -4,7 +4,7 @@
   },
   "name": "sokobot",
   "version": "0.0.1",
-  "description": "Update later",
+  "description": "AN Api for Sokobot",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

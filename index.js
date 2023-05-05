@@ -27,16 +27,15 @@ class Sokobot {
      * @public
      */
     getUser(userId) {
-        request.get(baseURL + APIPath + "users/"+userId,null,function (error, response, body) {
+        request.get(baseURL + APIPath + "users/"+userId,
+        {headers:{"Authorization": this.#token}},function (error, response, body) {
 
-            console.log(body)
 
             Sokobot.handleCode(response,body, (r,b) => {
-                console.log(r)
-                return new User(JSON.parse(b))
+                return new User(b)
             })
             
-        }).auth(null,null,true,this.#token)
+        })
     }
     /**
      * 
@@ -48,14 +47,13 @@ class Sokobot {
      */
     static handleCode(response,body, callback) {
         let status = Sokobot.handleCodes(response.statusCode)
-        if (status!=undefined) {console.log(response); return;}
+        if (status!=undefined) {console.log(status); return;}
         return callback(response,body)
     }
     /**
      * @private
      */
     static handleCodes(code) {
-        console.log(code)
         if (code===200)return undefined
         if (code===201) return undefined
         if (code===401) return "Token Provided was invalid"
@@ -65,17 +63,28 @@ class Sokobot {
     }
 }
 class User {
+
+    #raw
+    #level
+    #inventory
+    #balance
+    #language
+
     /**
      * 
-     * @param {JSON | String} userJSON the users json sent by the api 
+     * @param {String} userJSON the users json sent by the api 
      */
     constructor(userJSON) {
-        this.raw = userJSON
+        this.#raw = userJSON
         let json = JSON.parse(userJSON)
-        this.level=json.level
-        this.inventory=json.inventory
-        this.balance=json.balance
-        this.language="NOT IMPLEMENTED"
+        this.#level=json.level
+        this.#inventory=json.inventory
+        this.#balance=json.balance
+        this.#language="NOT IMPLEMENTED"
+        console.log(json)
+    }
+    getLevel() {
+        return this.#level
     }
     
 }
