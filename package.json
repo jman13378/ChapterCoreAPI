@@ -3,7 +3,7 @@
     "request": "^2.88.2"
   },
   "name": "sokobot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AN Api for Sokobot",
   "main": "index.js",
   "devDependencies": {},
