@@ -1,24 +1,31 @@
 {
   "dependencies": {
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "ts-node": "^10.9.2"
   },
-  "name": "sokobot",
-  "version": "1.0.1",
-  "description": "AN Api for Sokobot",
+  "name": "chaptercoreapi",
+  "version": "1.0.0",
+  "description": "An API for ChapterCore",
   "main": "index.js",
-  "keywords": ["sokobot", "sokobot api", "soko", "bot"],
-  "devDependencies": {},
+  "type": "module",
+  "keywords": [
+    "chapter",
+    "chaptercore"
+  ],
+  "devDependencies": {
+    "@types/request": "^2.48.12"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sokobot-Hosted/Sokobot-JS.git"
+    "url": "git+https://github.com/jman13378/ChapterCoreAPI.git"
   },
   "author": "Jonathan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sokobot-Hosted/Sokobot-JS/issues"
+    "url": "https://github.com/jman13378/ChapterCoreAPI/issues"
   },
-  "homepage": "https://github.com/Sokobot-Hosted/Sokobot-JS#readme"
+  "homepage": "https://github.com/jman13378/ChapterCoreAPI#readme"
 }

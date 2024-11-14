@@ -1,11 +1,13 @@
+import { Role } from "./Role";
+
 export class Chapter {
     id: string;
     name: string;
     state: string;
-    roles: string[];
+    roles: Role[];
     settings: string[];
     advisorId: string;
-    constructor(id: string, name: string, state: string, roles: string[], settings: string[], advisorId: string) {
+    constructor(id: string, name: string, state: string, roles: Role[], settings: string[], advisorId: string) {
         this.id = id
         this.name = name
         this.state = state
