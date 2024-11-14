@@ -1,9 +1,9 @@
-# Sokobot-JS
+# ChapterCore-API
 
-A JS API for the discord bot Sokobot
+A JS API for ChapterCore
 
 ## References
-- [Sokobot-JS](#sokobot-js)
+- [ChapterCore-API](#chaptercore-api)
   - [References](#references)
   - [Usage](#usage)
     - [Prerequisites](#prerequisites)
@@ -17,31 +17,20 @@ A JS API for the discord bot Sokobot
 ### Prerequisites
 To use the JS API you will need the following
 - `Node JS`
-- The JS API `npm install sokobot`
-- An API token (Can be registered [here](https://dashboard.sokobot.info/settings/developers/api))
+- The JS API `npm install chaptercoreapi`
+- ~~An API token (Can be registered [here](https://dashboard.sokobot.info/settings/developers/api))~~
 
 ### Set Up
 
-```js
-const Sokobot = require("sokobot"); // initialize your sokobot module
-const sokobot = new Sokobot("{token}"); // initialize the sokobot instance with your provided api key
-
-/**
- * Basic function to get a users level
- */
-async function getLevel() {
-  let user = await sokobot.getUser("{UserId}");
-
-  console.log(user.getLevel());
-}
-getLevel();
+```ts
+Await for setup code
 
 ```
 
 ## Links
-Crossed out links are either not finish or cant be accessed at this time
+Crossed out links are either not finish or cannot be accessed at this time
 
-- [Website](https://sokobot.info)
-- [Dashboard](https://dashboard.sokobot.info)
-- [Status Page](https://status.sokobot.info)
+- [Website](https://chaptercore.org)
+- ~~[Dashboard]()~~
+- ~~[Status Page]()~~
 - ~~[API Documentation]()~~

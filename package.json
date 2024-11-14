@@ -6,8 +6,7 @@
   "name": "chaptercoreapi",
   "version": "1.0.0",
   "description": "An API for ChapterCore",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "keywords": [
     "chapter",
     "chaptercore"
