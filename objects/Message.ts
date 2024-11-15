@@ -1,16 +1,16 @@
 import { User } from "./User";
 
 export class Message {
-    id: Number;
-    chapterId: Number;
-    user: User;
-    message: string;
+    id: Number; // Unique identifier for the message
+    chapterId: Number; // Identifier for the chapter
+    user: User; // User associated with the message
+    message: string; // Content of the message
 
     /**
      * Constructor to initialize the Message object.
      * @param id - The unique identifier for the message.
      * @param chapterId - The identifier for the chapter.
-     * @param userId - The identifier for the user.
+     * @param user - The user associated with the message.
      * @param message - The content of the message.
      */
     constructor(id: Number, chapterId: Number, user: User, message: string) {
@@ -24,7 +24,7 @@ export class Message {
      * Get the unique identifier of the message.
      * @returns The message ID.
      */
-    getMessageId() {
+    getMessageId(): Number {
         return this.id;
     }
 
@@ -32,15 +32,15 @@ export class Message {
      * Get the identifier of the chapter.
      * @returns The chapter ID.
      */
-    getChapterId() {
+    getChapterId(): Number {
         return this.chapterId;
     }
 
     /**
-     * Get the identifier of the user.
-     * @returns The user ID.
+     * Get the user associated with the message.
+     * @returns The user object.
      */
-    getUser() {
+    getUser(): User {
         return this.user;
     }
 
@@ -48,7 +48,7 @@ export class Message {
      * Get the content of the message.
      * @returns The message content.
      */
-    getMessage() {
+    getMessage(): string {
         return this.message;
     }
 }

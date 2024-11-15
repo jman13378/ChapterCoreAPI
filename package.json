@@ -4,7 +4,7 @@
     "ts-node": "^10.9.2"
   },
   "name": "chaptercoreapi",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "An API for ChapterCore",
   "main": "index.ts",
   "keywords": [
