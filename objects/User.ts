@@ -13,34 +13,46 @@ export class User {
     profile: string; // Profile information of the user
     roles: Role[]; // Roles assigned to the user
 
-    /**
-     * Constructor to initialize the User object.
-     * @param id - The unique identifier for the user.
-     * @param email - The email address of the user.
-     * @param username - The username of the user.
-     * @param chapterId - The identifier for the chapter.
-     * @param lastLogin - The last login time of the user.
-     * @param phone - The phone number of the user.
-     * @param profile - The profile description of the user.
-     * @param roles - The roles assigned to the user.
-     */
-    constructor(id: Number, email: string, username: string, chapterId: Number, lastLogin: string, phone: Number, profile: string, roles: Role[] = []) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.chapterId = chapterId;
-        this.lastLogin = lastLogin;
-        this.phone = phone;
-        this.profile = profile;
+/**
+ * Constructor to initialize the User object.
+ * @param id - The unique identifier for the user.
+ * @param email - The email address of the user.
+ * @param username - The username of the user.
+ * @param chapterId - The identifier for the chapter.
+ * @param lastLogin - The last login time of the user.
+ * @param phone - The phone number of the user.
+ * @param profile - The profile description of the user.
+ * @param roles - The roles assigned to the user.
+ * @param json - The JSON object to initialize the User object from.
+ */
+constructor(id?: Number, email?: string, username?: string, chapterId?: Number, lastLogin?: string, phone?: Number, profile?: string, roles: Role[] = [], json?: { id: Number, email: string, username: string, chapterId: Number, lastLogin: string, phone: Number, profile: string, roles: Role[] }) {
+    if (json) {
+        this.id = json.id;
+        this.email = json.email;
+        this.username = json.username;
+        this.chapterId = json.chapterId;
+        this.lastLogin = json.lastLogin;
+        this.phone = json.phone;
+        this.profile = json.profile;
+        this.roles = json.roles;
+    } else {
+        this.id = id!;
+        this.email = email!;
+        this.username = username!;
+        this.chapterId = chapterId!;
+        this.lastLogin = lastLogin!;
+        this.phone = phone!;
+        this.profile = profile!;
         this.roles = roles;
     }
+}
 
     /**
      * Builds a User object from JSON data.
      * @param json - The JSON data to build the User object from.
      * @returns A User object.
      */
-    buildUserFromJson(json: any): User {
+    static buildUserFromJson(json: any): User {
         return new User(json.id, json.email, json.username, json.chapterId, json.lastLogin, json.phone, json.profile);
     }
 
@@ -49,7 +61,7 @@ export class User {
      * @param json - The JSON data to build the list of User objects from.
      * @returns An array of User objects.
      */
-    buildUserListFromJson(json: any): User[] {
+    static buildUserListFromJson(json: any): User[] {
         let users: User[] = [];
         for (let i = 0; i < json.length; i++) {
             users.push(this.buildUserFromJson(json[i]));
@@ -62,7 +74,7 @@ export class User {
      * @param json - The JSON data to build the User object from.
      * @returns A User object with roles.
      */
-    buildUserFromJsonWithRole(json: any): User {
+    static buildUserFromJsonWithRole(json: any): User {
         let user = this.buildUserFromJson(json);
         user.roles.push(new Role(json.role.id, json.role.name));
         return user;
@@ -73,7 +85,7 @@ export class User {
      * @param json - The JSON data to build the list of User objects from.
      * @returns An array of User objects with roles.
      */
-    buildUserListFromJsonWithRole(json: any): User[] {
+    static buildUserListFromJsonWithRole(json: any): User[] {
         let users: User[] = [];
         for (let i = 0; i < json.length; i++) {
             users.push(this.buildUserFromJsonWithRole(json[i]));

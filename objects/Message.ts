@@ -12,14 +12,32 @@ export class Message {
      * @param chapterId - The identifier for the chapter.
      * @param user - The user associated with the message.
      * @param message - The content of the message.
+     * @param json - The JSON object to initialize the Message object from.
      */
-    constructor(id: Number, chapterId: Number, user: User, message: string) {
-        this.id = id;
-        this.chapterId = chapterId;
-        this.user = user;
-        this.message = message;
+    constructor(id?: Number, chapterId?: Number, user?: User, message?: string, json?: { id: Number, chapterId: Number, user: User, message: string }) {
+        if (json) {
+            this.id = json.id;
+            this.chapterId = json.chapterId;
+            this.user = json.user;
+            this.message = json.message;
+        } else {
+            this.id = id!;
+            this.chapterId = chapterId!;
+            this.user = user!;
+            this.message = message!;
+        }
     }
-
+    static buildMessageFromJson(json: any): Message {
+        return new Message(json.id, json.chapterId, json.user, json.message);
+    }
+    static buildMessageListFromJson(json: any): Message[] {
+        let messages: Message[] = [];
+        for (let i = 0; i < json.length; i++) {
+            messages.push(this.buildMessageFromJson(json[i]));
+        }
+        return messages;
+    }
+    
     /**
      * Get the unique identifier of the message.
      * @returns The message ID.

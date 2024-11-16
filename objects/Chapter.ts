@@ -16,16 +16,38 @@ export class Chapter {
      * @param roles - The roles associated with the chapter.
      * @param settings - The settings of the chapter.
      * @param advisorId - The advisor ID associated with the chapter.
+     * @param json - The JSON object to initialize the Chapter object from.
      */
-    constructor(id: string, name: string, state: string, roles: Role[], settings: string[], advisorId: string) {
-        this.id = id;
-        this.name = name;
-        this.state = state;
-        this.roles = roles;
-        this.settings = settings;
-        this.advisorId = advisorId;
+    constructor(id?: string, name?: string, state?: string, roles?: Role[], settings?: string[], advisorId?: string, json?: { id: string, name: string, state: string, roles: Role[], settings: string[], advisorId: string }) {
+        if (json) {
+            this.id = json.id;
+            this.name = json.name;
+            this.state = json.state;
+            this.roles = json.roles;
+            this.settings = json.settings;
+            this.advisorId = json.advisorId;
+        } else {
+            this.id = id!;
+            this.name = name!;
+            this.state = state!;
+            this.roles = roles!;
+            this.settings = settings!;
+            this.advisorId = advisorId!;
+        }
     }
-
+    static buildChapterFromJson(json: any): Chapter {
+        return new Chapter(json.id, json.name, json.state, json.roles, json.settings, json.advisorId);
+    }
+    static buildChapterListFromJson(json: any): Chapter[] {
+        let chapters: Chapter[] = [];
+        for (let i = 0; i < json.length; i++) {
+            chapters.push(this.buildChapterFromJson(json[i]));
+        }
+        return chapters;
+    }
+    static buildChapterFromJsonWithRoles(json: any): Chapter {
+        return new Chapter(json.id, json.name, json.state, Role.buildRoleListFromJson(json.roles), json.settings, json.advisorId);
+    }
     /**
      * Get the unique identifier of the chapter.
      * @returns The chapter ID.

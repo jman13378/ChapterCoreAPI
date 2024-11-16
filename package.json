@@ -1,19 +1,19 @@
 {
   "dependencies": {
-    "request": "^2.88.2",
+    "axios": "^1.7.7",
     "ts-node": "^10.9.2"
   },
   "name": "chaptercoreapi",
-  "version": "1.0.3",
+  "version": "1.0.9",
   "description": "An API for ChapterCore",
   "main": "index.ts",
+  "type": "module",
   "keywords": [
     "chapter",
     "chaptercore"
   ],
-  "devDependencies": {
-    "@types/request": "^2.48.12"
-  },
+
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
