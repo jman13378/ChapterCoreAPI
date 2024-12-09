@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "target": "ES2022",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "./dist" // Ensure compiled files are output to a directory
+    "outDir": "./dist", // Ensure compiled files are output to a directory
+    "declaration": true // Enable declaration file generation
+    
   },
   "include": ["**/*.ts"], // Adjust the include path as necessary
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
+
 }
