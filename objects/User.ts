@@ -1,52 +1,62 @@
+import { Profile } from "./Profile";
 import { Role } from "./Role";
 
 /**
  * User class to represent a user in the system.
  */
 export class User {
-    id: Number; // Unique identifier for the user
-    email: string; // Email address of the user
-    username: string; // Username of the user
-    chapterId: Number; // Chapter ID associated with the user
-    lastLogin: string; // Last login time of the user
-    phone: Number; // Phone number of the user
-    profile: string; // Profile information of the user
-    roles: Role[]; // Roles assigned to the user
+    #id: Number; // Unique identifier for the user
+    #email: string; // Email address of the user
+    #username: string; // Username of the user
+    #chapterId: Number; // Chapter ID associated with the user
+    #lastLogin: string; // Last login time of the user
+    #phone: Number; // Phone number of the user
+    #profile: Profile; // Profile information of the user
+    #roles: Role[]; // Roles assigned to the user
 
-/**
- * Constructor to initialize the User object.
- * @param id - The unique identifier for the user.
- * @param email - The email address of the user.
- * @param username - The username of the user.
- * @param chapterId - The identifier for the chapter.
- * @param lastLogin - The last login time of the user.
- * @param phone - The phone number of the user.
- * @param profile - The profile description of the user.
- * @param roles - The roles assigned to the user.
- * @param json - The JSON object to initialize the User object from.
- */
-constructor(id?: Number, email?: string, username?: string, chapterId?: Number, lastLogin?: string, phone?: Number, profile?: string, roles: Role[] = [], json?: { id: Number, email: string, username: string, chapterId: Number, lastLogin: string, phone: Number, profile: string, roles: Role[] }) {
-    if (json) {
-        this.id = json.id;
-        this.email = json.email;
-        this.username = json.username;
-        this.chapterId = json.chapterId;
-        this.lastLogin = json.lastLogin;
-        this.phone = json.phone;
-        this.profile = json.profile;
-        this.roles = json.roles;
-    } else {
-        this.id = id!;
-        this.email = email!;
-        this.username = username!;
-        this.chapterId = chapterId!;
-        this.lastLogin = lastLogin!;
-        this.phone = phone!;
-        this.profile = profile!;
-        this.roles = roles;
+    /**
+     * Constructor to initialize the User object.
+     * @param id - The unique identifier for the user.
+     * @param email - The email address of the user.
+     * @param username - The username of the user.
+     * @param chapterId - The identifier for the chapter.
+     * @param lastLogin - The last login time of the user.
+     * @param phone - The phone number of the user.
+     * @param profile - The profile description of the user.
+     * @param roles - The roles assigned to the user.
+     * @param json - The JSON object to initialize the User object from.
+     */
+    constructor(id?: Number, email?: string, username?: string, chapterId?: Number, lastLogin?: string, phone?: Number, profile?: string, roles: Role[] = [], json?: { id: Number, email: string, username: string, chapterId: Number, lastLogin: string, phone: Number, profile: string, roles: Role[] }) {
+        if (json) {
+            this.#id = json.id;
+            this.#email = json.email;
+            this.#username = json.username;
+            this.#chapterId = json.chapterId;
+            this.#lastLogin = json.lastLogin;
+            this.#phone = json.phone;
+            this.#profile = Profile.buildProfileFromJson(json);
+            this.#roles = json.roles;
+        } else {
+            this.#id = id;
+            this.#email = email;
+            this.#username = username;
+            this.#chapterId = chapterId;
+            this.#lastLogin = lastLogin;
+            this.#phone = phone;
+            let json: {UserId:number, bio:string,avatarURL:string} =JSON.parse(profile)
+            this.#profile = new Profile(json.UserId,json.bio,json.avatarURL);
+            this.#roles = roles;
+        }
+
+
     }
-}
-
+    /**
+             * Gets the profile of the user.
+             * @returns The profile of the user.
+             */
+    getProfile(): Profile {
+        return this.#profile;
+    }
     /**
      * Builds a User object from JSON data.
      * @param json - The JSON data to build the User object from.
@@ -76,7 +86,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      */
     static buildUserFromJsonWithRole(json: any): User {
         let user = this.buildUserFromJson(json);
-        user.roles.push(new Role(json.role.id, json.role.name));
+        user.#roles.push(new Role(json.role.id, json.role.name));
         return user;
     }
 
@@ -99,13 +109,13 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      */
     toJson(): any {
         return {
-            id: this.id,
-            email: this.email,
-            username: this.username,
-            chapterId: this.chapterId,
-            lastLogin: this.lastLogin,
-            phone: this.phone,
-            profile: this.profile
+            id: this.#id,
+            email: this.#email,
+            username: this.#username,
+            chapterId: this.#chapterId,
+            lastLogin: this.#lastLogin,
+            phone: this.#phone,
+            profile: this.#profile
         };
     }
 
@@ -115,17 +125,17 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      */
     toJsonWithRole(): any {
         let roles: Role[] = []
-        this.roles.forEach((e) => {
+        this.#roles.forEach((e) => {
             roles.push(e.toJson())
         })
         return {
-            id: this.id,
-            email: this.email,
-            username: this.username,
-            chapterId: this.chapterId,
-            lastLogin: this.lastLogin,
-            phone: this.phone,
-            profile: this.profile,
+            id: this.#id,
+            email: this.#email,
+            username: this.#username,
+            chapterId: this.#chapterId,
+            lastLogin: this.#lastLogin,
+            phone: this.#phone,
+            profile: this.#profile,
             role: roles
         };
     }
@@ -135,7 +145,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns An array of Role objects.
      */
     getRole(): Role[] {
-        return this.roles;
+        return this.#roles;
     }
 
     /**
@@ -143,7 +153,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns The ID of the user.
      */
     getId(): Number {
-        return this.id;
+        return this.#id;
     }
 
     /**
@@ -151,7 +161,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns The email of the user.
      */
     getEmail(): string {
-        return this.email;
+        return this.#email;
     }
 
     /**
@@ -159,7 +169,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns The username of the user.
      */
     getUsername(): string {
-        return this.username;
+        return this.#username;
     }
 
     /**
@@ -167,7 +177,7 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns The chapter ID of the user.
      */
     getChapterId(): Number {
-        return this.chapterId;
+        return this.#chapterId;
     }
 
     /**
@@ -175,7 +185,67 @@ constructor(id?: Number, email?: string, username?: string, chapterId?: Number, 
      * @returns The last login time of the user.
      */
     getLastLogin(): string {
-        return this.lastLogin;
+        return this.#lastLogin;
     }
 
+    /**
+     * Gets the phone number of the user.
+     * @returns The phone number of the user.
+     */
+    getPhoneNumber(): Number {
+        return this.#phone;
+    }
+
+
+    getPublicInfo(): any {
+        return {
+            id: this.#id,
+            email: this.#email,
+            username: this.#username,
+            chapterId: this.#chapterId,
+            phone: this.#phone,
+            profile: this.#profile
+        };
+    }
+}
+export class PublicInfo {
+    #id: Number; // Unique identifier for the user
+    #email: string; // Email address of the user
+    #username: string; // Username of the user
+    #chapterId: Number; // Chapter ID associated with the user
+    #phone: Number; // Phone number of the user
+    #profile: Profile; // Profile information of the user
+
+    constructor(user: User) {
+        this.#id = user.getId();
+        this.#email = user.getEmail();
+        this.#username = user.getUsername();
+        this.#chapterId = user.getChapterId();
+        this.#phone = user.getPhoneNumber();
+        this.#profile = user.getProfile();
+    }
+
+    getId(): Number {
+        return this.#id;
+    }
+
+    getEmail(): string {
+        return this.#email;
+    }
+
+    getUsername(): string {
+        return this.#username;
+    }
+
+    getChapterId(): Number {
+        return this.#chapterId;
+    }
+
+    getPhone(): Number {
+        return this.#phone;
+    }
+
+    getProfile(): Profile {
+        return this.#profile;
+    }
 }
