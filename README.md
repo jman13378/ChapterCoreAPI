@@ -1,4 +1,7 @@
 # ChapterCore-API
+![NPM Version](https://img.shields.io/npm/v/chaptercoreapi) ![NPM Downloads](https://img.shields.io/npm/dw/chaptercoreapi)
+ ![GitHub Release](https://img.shields.io/github/v/release/jman13378/chaptercoreapi)
+
 
 A JS API for ChapterCore
 
@@ -18,7 +21,7 @@ A JS API for ChapterCore
 To use the JS API you will need the following
 - `Node JS`
 - The JS API `npm install chaptercoreapi`
-- ~~An API token (Can be registered [here](https://dashboard.sokobot.info/settings/developers/api))~~
+- ~~An API token (Can be registered [here](https://dashboard.sokobot.info/settings/developers/api))~~ Not yet implemented
 
 ### Set Up
 
