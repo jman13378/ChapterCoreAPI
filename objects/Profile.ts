@@ -1,4 +1,4 @@
-import { User } from "./User";
+import { User } from "./User.js";
 
 /**
  * Profile class to represent a user's profile in the system.

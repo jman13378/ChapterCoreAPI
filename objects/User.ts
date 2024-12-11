@@ -1,5 +1,5 @@
-import { Profile } from "./Profile";
-import { Role } from "./Role";
+import { Profile } from "./Profile.js";
+import { Role } from "./Role.js";
 
 /**
  * User class to represent a user in the system.
@@ -43,8 +43,10 @@ export class User {
             this.#chapterId = chapterId;
             this.#lastLogin = lastLogin;
             this.#phone = phone;
-            let json: {UserId:number, bio:string,avatarURL:string} =JSON.parse(profile)
-            this.#profile = new Profile(json.UserId,json.bio,json.avatarURL);
+            if (profile) {
+                let json: { UserId: number, bio: string, avatarURL: string } = JSON.parse(profile)
+                this.#profile = new Profile(json.UserId, json.bio, json.avatarURL);
+            } else this.#profile = new Profile();
             this.#roles = roles;
         }
 

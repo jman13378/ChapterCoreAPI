@@ -1,4 +1,4 @@
-import { Role } from "./Role";
+import { Role } from "./Role.js";
 
 export class Chapter {
     id: string; // Unique identifier for the chapter
