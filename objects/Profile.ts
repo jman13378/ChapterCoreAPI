@@ -4,27 +4,20 @@ import { User } from "./User.js";
  * Profile class to represent a user's profile in the system.
  */
 export class Profile {
-    userId: Number; // User ID associated with the profile
-    bio: string; // Bio of the user
-    avatarUrl: string; // URL of the user's avatar
+    #bio: string; // Bio of the user
+    #avatarUrl: string; // URL of the user's avatar
 
     /**
      * Constructor to initialize the Profile object.
-     * @param userId - The user ID associated with the profile.
      * @param bio - The bio of the user.
      * @param avatarUrl - The URL of the user's avatar.
      * @param json - The JSON object to initialize the Profile object from.
      */
-    constructor(userId?: Number, bio?: string, avatarUrl?: string, json?: { id: Number, userId: Number, bio: string, avatarUrl: string }) {
-        if (json) {
-            this.userId = json.userId;
-            this.bio = json.bio;
-            this.avatarUrl = json.avatarUrl;
-        } else {
-            this.userId = userId!;
-            this.bio = bio!;
-            this.avatarUrl = avatarUrl!;
-        }
+    constructor(bio: string = "", avatarUrl: string =  "https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png") {
+
+        this.#bio = bio;
+        this.#avatarUrl = avatarUrl;
+
     }
 
     /**
@@ -33,9 +26,8 @@ export class Profile {
      */
     toJson(): any {
         return {
-            userId: this.userId,
-            bio: this.bio,
-            avatarUrl: this.avatarUrl
+            bio: this.#bio,
+            avatarUrl: this.#avatarUrl
         };
     }
 
@@ -45,7 +37,7 @@ export class Profile {
      * @returns A Profile object.
      */
     static buildProfileFromJson(json: any): Profile {
-        return new Profile(json.id, json.userId, json.bio, json.avatarUrl);
+        return new Profile(json.bio, json.avatarUrl);
     }
 
     /**

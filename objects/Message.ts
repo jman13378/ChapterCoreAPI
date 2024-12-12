@@ -1,10 +1,10 @@
 import { User } from "./User.js";
 
 export class Message {
-    id: Number; // Unique identifier for the message
-    chapterId: Number; // Identifier for the chapter
-    user: User; // User associated with the message
-    message: string; // Content of the message
+    #id: Number; // Unique identifier for the message
+    #chapterId: Number; // Identifier for the chapter
+    #user: User; // User associated with the message
+    #message: string; // Content of the message
 
     /**
      * Constructor to initialize the Message object.
@@ -14,18 +14,13 @@ export class Message {
      * @param message - The content of the message.
      * @param json - The JSON object to initialize the Message object from.
      */
-    constructor(id?: Number, chapterId?: Number, user?: User, message?: string, json?: { id: Number, chapterId: Number, user: User, message: string }) {
-        if (json) {
-            this.id = json.id;
-            this.chapterId = json.chapterId;
-            this.user = json.user;
-            this.message = json.message;
-        } else {
-            this.id = id!;
-            this.chapterId = chapterId!;
-            this.user = user!;
-            this.message = message!;
-        }
+    constructor(id: Number, chapterId: Number, user: User, message: string) {
+
+        this.#id = id;
+        this.#chapterId = chapterId;
+        this.#user = user;
+        this.#message = message;
+
     }
     static buildMessageFromJson(json: any): Message {
         return new Message(json.id, json.chapterId, json.user, json.message);
@@ -37,13 +32,13 @@ export class Message {
         }
         return messages;
     }
-    
+
     /**
      * Get the unique identifier of the message.
      * @returns The message ID.
      */
     getMessageId(): Number {
-        return this.id;
+        return this.#id;
     }
 
     /**
@@ -51,7 +46,7 @@ export class Message {
      * @returns The chapter ID.
      */
     getChapterId(): Number {
-        return this.chapterId;
+        return this.#chapterId;
     }
 
     /**
@@ -59,7 +54,7 @@ export class Message {
      * @returns The user object.
      */
     getUser(): User {
-        return this.user;
+        return this.#user;
     }
 
     /**
@@ -67,6 +62,6 @@ export class Message {
      * @returns The message content.
      */
     getMessage(): string {
-        return this.message;
+        return this.#message;
     }
 }

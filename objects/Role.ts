@@ -1,24 +1,26 @@
 export class Role {
-    id: Number; // Unique identifier for the role
-    name: string; // Name of the role
+    #id: Number; // Unique identifier for the role
+    #name: string; // Name of the role
 
-    constructor(id?: Number, name?: string, json?: { id: Number, name: string }) {
-        if (json) {
-            this.id = json.id;
-            this.name = json.name;
-        } else {
-            this.id = id!;
-            this.name = name!;
-        }
+    constructor(id: Number, name: string) {
+
+        this.#id = id!;
+        this.#name = name!;
+
     }
 
     toJson(): any {
         return {
-            id: this.id,
-            name: this.name
+            id: this.#id,
+            name: this.#name
         };
     }
-
+    getRoleId(): Number {
+        return this.#id
+    }
+    getRoleName(): string {
+        return this.#name;
+    }
     static buildRoleFromJson(json: any): Role {
         return new Role(json.id, json.name);
     }

@@ -1,8 +1,6 @@
 testfile.js
 testfile.ts
 index.ts
-/objects/Chapter.ts
-/objects/Message.ts
-/objects/Role.ts
-/objects/User.ts
+
+/objects/**.ts 
 README.md

@@ -9,7 +9,7 @@ export class User {
     #email: string; // Email address of the user
     #username: string; // Username of the user
     #chapterId: Number; // Chapter ID associated with the user
-    #lastLogin: string; // Last login time of the user
+    #lastLogin: Number; // Last login time of the user
     #phone: Number; // Phone number of the user
     #profile: Profile; // Profile information of the user
     #roles: Role[]; // Roles assigned to the user
@@ -26,29 +26,18 @@ export class User {
      * @param roles - The roles assigned to the user.
      * @param json - The JSON object to initialize the User object from.
      */
-    constructor(id?: Number, email?: string, username?: string, chapterId?: Number, lastLogin?: string, phone?: Number, profile?: string, roles: Role[] = [], json?: { id: Number, email: string, username: string, chapterId: Number, lastLogin: string, phone: Number, profile: string, roles: Role[] }) {
-        if (json) {
-            this.#id = json.id;
-            this.#email = json.email;
-            this.#username = json.username;
-            this.#chapterId = json.chapterId;
-            this.#lastLogin = json.lastLogin;
-            this.#phone = json.phone;
-            this.#profile = Profile.buildProfileFromJson(json);
-            this.#roles = json.roles;
-        } else {
-            this.#id = id;
-            this.#email = email;
-            this.#username = username;
-            this.#chapterId = chapterId;
-            this.#lastLogin = lastLogin;
-            this.#phone = phone;
-            if (profile) {
-                let json: { UserId: number, bio: string, avatarURL: string } = JSON.parse(profile)
-                this.#profile = new Profile(json.UserId, json.bio, json.avatarURL);
-            } else this.#profile = new Profile();
-            this.#roles = roles;
-        }
+    constructor(id: Number, email: string, username: string, chapterId: Number, lastLogin: Number, phone: Number, profile: Profile = new Profile(), roles: Role[] = []) {
+
+        this.#id = id;
+        this.#email = email;
+        this.#username = username;
+        this.#chapterId = chapterId;
+        this.#lastLogin = lastLogin;
+        this.#phone = phone;
+
+        this.#profile = profile
+        this.#roles = roles;
+
 
 
     }
@@ -146,7 +135,7 @@ export class User {
      * Gets the roles of the user.
      * @returns An array of Role objects.
      */
-    getRole(): Role[] {
+    getRoles(): Role[] {
         return this.#roles;
     }
 
@@ -186,7 +175,7 @@ export class User {
      * Gets the last login time of the user.
      * @returns The last login time of the user.
      */
-    getLastLogin(): string {
+    getLastLogin(): Number {
         return this.#lastLogin;
     }
 
@@ -218,6 +207,10 @@ export class PublicInfo {
     #phone: Number; // Phone number of the user
     #profile: Profile; // Profile information of the user
 
+    /**
+     * Constructor to initialize the PublicInfo object.
+     * @param user - The user object to extract public information from.
+     */
     constructor(user: User) {
         this.#id = user.getId();
         this.#email = user.getEmail();
@@ -227,26 +220,50 @@ export class PublicInfo {
         this.#profile = user.getProfile();
     }
 
+    /**
+     * Gets the unique identifier for the user.
+     * @returns The unique identifier for the user.
+     */
     getId(): Number {
         return this.#id;
     }
 
+    /**
+     * Gets the email address of the user.
+     * @returns The email address of the user.
+     */
     getEmail(): string {
         return this.#email;
     }
 
+    /**
+     * Gets the username of the user.
+     * @returns The username of the user.
+     */
     getUsername(): string {
         return this.#username;
     }
 
+    /**
+     * Gets the chapter ID associated with the user.
+     * @returns The chapter ID associated with the user.
+     */
     getChapterId(): Number {
         return this.#chapterId;
     }
 
+    /**
+     * Gets the phone number of the user.
+     * @returns The phone number of the user.
+     */
     getPhone(): Number {
         return this.#phone;
     }
 
+    /**
+     * Gets the profile information of the user.
+     * @returns The profile information of the user.
+     */
     getProfile(): Profile {
         return this.#profile;
     }
