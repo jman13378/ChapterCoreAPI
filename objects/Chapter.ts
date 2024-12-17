@@ -1,5 +1,6 @@
 import { ChapterSettings } from "./ChapterSettings.js";
 import { Role } from "./Role.js";
+import { Flags as ChapterFlags } from "./Flags.js";
 
 export class Chapter {
     #id: Number; // Unique identifier for the chapter
@@ -7,7 +8,7 @@ export class Chapter {
     #state: string; // State of the chapter
     #roles: Role[]; // Roles associated with the chapter
     #settings: ChapterSettings; // Settings of the chapter
-    #advisorId: Number; // Advisor ID associated with the chapter
+    #flags: number; // Flags associated with the chapter
 
     /**
      * Constructor to initialize the Chapter object.
@@ -16,15 +17,15 @@ export class Chapter {
      * @param state - The state of the chapter.
      * @param roles - The roles associated with the chapter.
      * @param settings - The settings of the chapter.
-     * @param advisorId - The advisor ID associated with the chapter.
+     * @param flags - The flags associated with the chapter.
      */
-    constructor(id: Number, name: string, state: string, roles: Role[], settings: ChapterSettings, advisorId: Number) {
+    constructor(id: Number, name: string, state: string, roles: Role[], settings: ChapterSettings, flags: number = 0) {
         this.#id = id;
         this.#name = name;
         this.#state = state;
         this.#roles = roles;
         this.#settings = settings;
-        this.#advisorId = advisorId;
+        this.#flags = flags;
     }
 
     /**
@@ -33,7 +34,7 @@ export class Chapter {
      * @returns A Chapter object.
      */
     static buildChapterFromJson(json: any): Chapter {
-        return new Chapter(json.id, json.name, json.state, json.roles, json.settings, json.advisorId);
+        return new Chapter(json.id, json.name, json.state, json.roles, json.settings, json.flags);
     }
 
     static buildChapterListFromJson(json: any): Chapter[] {
@@ -45,7 +46,7 @@ export class Chapter {
     }
 
     static buildChapterFromJsonWithRoles(json: any): Chapter {
-        return new Chapter(json.id, json.name, json.state, Role.buildRoleListFromJson(json.roles), json.settings, json.advisorId);
+        return new Chapter(json.id, json.name, json.state, Role.buildRoleListFromJson(json.roles), json.settings, json.flags);
     }
 
     /**
@@ -88,11 +89,35 @@ export class Chapter {
         return this.#settings;
     }
 
+
     /**
-     * Gets the advisor ID associated with the chapter.
-     * @returns The advisor ID associated with the chapter.
+     * Gets the flags associated with the chapter.
+     * @returns The flags associated with the chapter.
      */
-    getAdvisorId(): Number {
-        return this.#advisorId;
+    getFlags(): number {
+        return this.#flags;
     }
+
+    /**
+     * Checks if a flag is set.
+     * @param flag - The flag to check.
+     * @returns True if the flag is set, false otherwise.
+     */
+    hasFlag(flag: ChapterFlags): boolean {
+        return (this.#flags & flag) === flag;
+    }
+        /**
+     * Sets a flag.
+     * @param flag - The flag to set.
+     */
+        setFlag(flag: ChapterFlags): void {
+            this.#flags |= flag;
+        }
+        /**
+     * Clears a flag.
+     * @param flag - The flag to clear.
+     */
+        clearFlag(flag: ChapterFlags): void {
+            this.#flags &= ~flag;
+        }
 }

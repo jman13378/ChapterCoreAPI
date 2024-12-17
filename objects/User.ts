@@ -1,5 +1,6 @@
 import { Profile } from "./Profile.js";
 import { Role } from "./Role.js";
+import { Flags as UserFlags } from "./Flags.js";
 
 /**
  * User class to represent a user in the system.
@@ -13,6 +14,8 @@ export class User {
     #phone: Number; // Phone number of the user
     #profile: Profile; // Profile information of the user
     #roles: Role[]; // Roles assigned to the user
+    #flags: number; // Flags associated with the user
+
 
     /**
      * Constructor to initialize the User object.
@@ -24,37 +27,35 @@ export class User {
      * @param phone - The phone number of the user.
      * @param profile - The profile description of the user.
      * @param roles - The roles assigned to the user.
-     * @param json - The JSON object to initialize the User object from.
+     * @param flags - The flags associated with the user.
      */
-    constructor(id: Number, email: string, username: string, chapterId: Number, lastLogin: Number, phone: Number, profile: Profile = new Profile(), roles: Role[] = []) {
-
+    constructor(id: Number, email: string, username: string, chapterId: Number, lastLogin: Number, phone: Number, profile: Profile = new Profile(), roles: Role[] = [], flags: number = 0) {
         this.#id = id;
         this.#email = email;
         this.#username = username;
         this.#chapterId = chapterId;
         this.#lastLogin = lastLogin;
         this.#phone = phone;
-
-        this.#profile = profile
+        this.#profile = profile;
         this.#roles = roles;
-
-
-
+        this.#flags = flags;
     }
+
     /**
-             * Gets the profile of the user.
-             * @returns The profile of the user.
-             */
+     * Gets the profile of the user.
+     * @returns The profile of the user.
+     */
     getProfile(): Profile {
         return this.#profile;
     }
+
     /**
      * Builds a User object from JSON data.
      * @param json - The JSON data to build the User object from.
      * @returns A User object.
      */
     static buildUserFromJson(json: any): User {
-        return new User(json.id, json.email, json.username, json.chapterId, json.lastLogin, json.phone, json.profile);
+        return new User(json.id, json.email, json.username, json.chapterId, json.lastLogin, json.phone, json.profile, json.roles, json.flags);
     }
 
     /**
@@ -106,7 +107,8 @@ export class User {
             chapterId: this.#chapterId,
             lastLogin: this.#lastLogin,
             phone: this.#phone,
-            profile: this.#profile
+            profile: this.#profile,
+            flags: this.#flags
         };
     }
 
@@ -127,7 +129,8 @@ export class User {
             lastLogin: this.#lastLogin,
             phone: this.#phone,
             profile: this.#profile,
-            role: roles
+            role: roles,
+            flags: this.#flags
         };
     }
 
@@ -187,7 +190,35 @@ export class User {
         return this.#phone;
     }
 
-
+    /**
+     * Gets the flags associated with the user.
+     * @returns The flags associated with the user.
+     */
+    getFlags(): Number {
+        return this.#flags;
+    }
+    /**
+      * Checks if a flag is set.
+      * @param flag - The flag to check.
+      * @returns True if the flag is set, false otherwise.
+      */
+    hasFlag(flag: UserFlags): boolean {
+        return (this.#flags & flag) === flag;
+    }
+    /**
+     * Sets a flag.
+     * @param flag - The flag to set.
+     */
+    setFlag(flag: UserFlags): void {
+        this.#flags |= flag;
+    }
+    /**
+ * Clears a flag.
+ * @param flag - The flag to clear.
+ */
+    clearFlag(flag: UserFlags): void {
+        this.#flags &= ~flag;
+    }
     getPublicInfo(): any {
         return {
             id: this.#id,
@@ -199,6 +230,7 @@ export class User {
         };
     }
 }
+
 export class PublicInfo {
     #id: Number; // Unique identifier for the user
     #email: string; // Email address of the user

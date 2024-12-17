@@ -4,6 +4,7 @@ import { User,PublicInfo as UserPublicInfo } from "./objects/User.js"
 import { Role } from "./objects/Role.js"
 import { Profile as UserProfile } from "./objects/Profile.js"
 import { Setting,ChapterSettings } from "./objects/ChapterSettings.js"
+import { Flags } from "./objects/Flags.js"
 import request from "axios"
 const baseURL = "https://backend.chaptercore.org/";
 const APIPath = "api/";
@@ -17,4 +18,4 @@ class API {
     }
 }
 // Export all of the necessary classes
-export  { Chapter, Message, User, Role, API, UserProfile,UserPublicInfo,Setting,ChapterSettings };
+export  { Chapter, Message, User, Role, API, UserProfile,UserPublicInfo,Setting,ChapterSettings, Flags };
