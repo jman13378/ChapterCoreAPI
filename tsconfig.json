@@ -6,8 +6,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "./dist", // Ensure compiled files are output to a directory
-    "declaration": true // Enable declaration file generation
-    
+    "declaration": true, // Enable declaration file generation
+    "resolveJsonModule": true
   },
   "include": ["**/*.ts"], // Adjust the include path as necessary
   "exclude": ["node_modules", "dist", "testfile.ts"]

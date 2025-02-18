@@ -1,13 +1,13 @@
-import { ChapterSettings } from "./ChapterSettings.js";
 import { Role } from "./Role.js";
 import { Flags as ChapterFlags } from "./Flags.js";
+import defaults from './../defaults/chapter_settings.json';
 
 export class Chapter {
-    #id: Number; // Unique identifier for the chapter
+    #id: number; // Unique identifier for the chapter
     #name: string; // Name of the chapter
     #state: string; // State of the chapter
     #roles: Role[]; // Roles associated with the chapter
-    #settings: ChapterSettings; // Settings of the chapter
+    #settings: object; // Settings of the chapter
     #flags: number; // Flags associated with the chapter
 
     /**
@@ -19,7 +19,7 @@ export class Chapter {
      * @param settings - The settings of the chapter.
      * @param flags - The flags associated with the chapter.
      */
-    constructor(id: Number, name: string, state: string, roles: Role[], settings: ChapterSettings, flags: number = 0) {
+    constructor(id: number, name: string, state: string, roles: Role[], settings: object, flags: number = 0) {
         this.#id = id;
         this.#name = name;
         this.#state = state;
@@ -47,6 +47,32 @@ export class Chapter {
 
     static buildChapterFromJsonWithRoles(json: any): Chapter {
         return new Chapter(json.id, json.name, json.state, Role.buildRoleListFromJson(json.roles), json.settings, json.flags);
+    }
+    toJson(): any {
+        return {
+            id: this.#id,
+            name: this.#name,
+            state: this.#state,
+            roles: this.#roles,
+            settings: this.#settings,
+            flags: this.#flags
+        };
+    }
+    toJsonWithRoles(): any {
+        let roles = []
+        if (this.#roles == undefined || this.#roles.length == 0) {
+            for (let role of this.#roles) {
+                roles.push(role.toJson())
+            }
+        }
+        return {
+            id: this.#id,
+            name: this.#name,
+            state: this.#state,
+            roles: roles,
+            settings: this.#settings,
+            flags: this.#flags
+        };
     }
 
     /**
@@ -85,7 +111,7 @@ export class Chapter {
      * Gets the settings of the chapter.
      * @returns The settings of the chapter.
      */
-    getSettings(): ChapterSettings {
+    getSettings(): object {
         return this.#settings;
     }
 
@@ -106,18 +132,18 @@ export class Chapter {
     hasFlag(flag: ChapterFlags): boolean {
         return (this.#flags & flag) === flag;
     }
-        /**
-     * Sets a flag.
-     * @param flag - The flag to set.
-     */
-        setFlag(flag: ChapterFlags): void {
-            this.#flags |= flag;
-        }
-        /**
-     * Clears a flag.
-     * @param flag - The flag to clear.
-     */
-        clearFlag(flag: ChapterFlags): void {
-            this.#flags &= ~flag;
-        }
+    /**
+ * Sets a flag.
+ * @param flag - The flag to set.
+ */
+    setFlag(flag: ChapterFlags): void {
+        this.#flags |= flag;
+    }
+    /**
+ * Clears a flag.
+ * @param flag - The flag to clear.
+ */
+    clearFlag(flag: ChapterFlags): void {
+        this.#flags &= ~flag;
+    }
 }

@@ -46,7 +46,7 @@ export class User {
      * @returns The profile of the user.
      */
     getProfile(): Profile {
-        return this.#profile;
+        return this.#profile || new Profile();
     }
 
     /**
@@ -55,7 +55,7 @@ export class User {
      * @returns A User object.
      */
     static buildUserFromJson(json: any): User {
-        return new User(json.id, json.email, json.username, json.chapterId, json.lastLogin, json.phone, json.profile, json.roles, json.flags);
+        return new User(json.id, json.email, json.username, json.chapterId, json.lastLogin, json.phone, ((json.profile == undefined || Object.keys(json.profile).length === 0) ? new Profile() : json.profile), json.roles, json.flags);
     }
 
     /**
@@ -78,7 +78,12 @@ export class User {
      */
     static buildUserFromJsonWithRole(json: any): User {
         let user = this.buildUserFromJson(json);
-        user.#roles.push(new Role(json.role.id, json.role.name));
+        if (user.getRoles().length < 0) {
+
+            for (let i = 0; i < json.role.length; i++) {
+                user.#roles.push(Role.buildRoleFromJson(json.role[i]));
+            }
+        }
         return user;
     }
 
@@ -118,9 +123,11 @@ export class User {
      */
     toJsonWithRole(): any {
         let roles: Role[] = []
-        this.#roles.forEach((e) => {
-            roles.push(e.toJson())
-        })
+        if (this.#roles.length < 0) {
+            for (let i = 0; i < this.#roles.length; i++) {
+                roles.push(this.#roles[i].toJson());
+            }
+        }
         return {
             id: this.#id,
             email: this.#email,

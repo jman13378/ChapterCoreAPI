@@ -27,6 +27,9 @@ export class Role {
 
     static buildRoleListFromJson(json: any): Role[] {
         let roles: Role[] = [];
+        if (json == undefined || json.length == 0) {
+            return roles;
+        }
         for (let i = 0; i < json.length; i++) {
             roles.push(this.buildRoleFromJson(json[i]));
         }

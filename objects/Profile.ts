@@ -13,13 +13,27 @@ export class Profile {
      * @param avatarUrl - The URL of the user's avatar.
      * @param json - The JSON object to initialize the Profile object from.
      */
-    constructor(bio: string = "", avatarUrl: string =  "https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png") {
+    constructor(bio: string = "", avatarUrl: string = "https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png") {
 
         this.#bio = bio;
         this.#avatarUrl = avatarUrl;
 
     }
 
+    /**
+     * Gets the bio of the user.
+     * @returns The bio of the user.
+     */
+    getBio(): string {
+        return this.#bio;
+    }
+    /**
+     * Gets the URL of the user's avatar.
+     * @returns The URL of the user's avatar.
+     */
+    getAvatarUrl(): string {
+        return this.#avatarUrl;
+    }
     /**
      * Converts the Profile object to JSON format.
      * @returns The JSON representation of the Profile object.
